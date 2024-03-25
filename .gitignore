@@ -5,6 +5,7 @@ target/
 # 忽略编译生成的class文件
 *.class
 # 忽略Maven项目生成的IDEA配置文件
+*.iml
 mvnw
 mvnw.cmd
 
