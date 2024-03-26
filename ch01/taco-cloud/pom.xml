@@ -1,97 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- tag::allButSelenium[] -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
         https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.3</version>   <!--1-->
-    <relativePath />
-  </parent>
-  <groupId>sia</groupId>
-  <artifactId>taco-cloud</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>taco-cloud</name>
-  <description>Taco Cloud Example</description>
-
-  <properties>
-    <java.version>11</java.version>
-  </properties>
-
-  <dependencies>
-    <dependency>                                             <!--2-->
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-devtools</artifactId>
-      <scope>runtime</scope>
-      <optional>true</optional>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <groupId>org.junit.vintage</groupId>
-          <artifactId>junit-vintage-engine</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-<!-- end::allButSelenium[] -->
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>htmlunit-driver</artifactId>
-      <scope>test</scope>
-    </dependency>
-<!-- tag::allButSelenium[] -->
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>                                               <!--3-->
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.3</version>   <!--1 springboot版本-->
+        <relativePath/>
+    </parent>
+    <groupId>sia</groupId>
+    <artifactId>taco-cloud</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>taco-cloud</name>
+    <description>Taco Cloud Example</description>
 
-  <repositories>
-    <repository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-    </repository>
-  </repositories>
-  <pluginRepositories>
-    <pluginRepository>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-    </pluginRepository>
-  </pluginRepositories>
+    <properties>
+        <java.version>11</java.version>
+    </properties>
 
+    <dependencies>
+        <dependency>                                             <!--2 starter依赖-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <!--Spring Boot starter依赖的特别之处在于它们本身并不包含库代码，而是传递性地拉取其他的库-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <scope>runtime</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- end::allButSelenium[] -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>htmlunit-driver</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- tag::allButSelenium[] -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!--
+              它提供了一个Maven goal，允许我们使用Maven来运行应用；
+              它会确保依赖的所有库都会包含在可执行JAR文件中，并且能够保证它们在运行时类路径下是可用的；
+              它会确保依赖的所有库都会包含在可执行JAR文件中，并且能够保证它们在运行时类路径下是可用的；
+            -->
+            <plugin>                                               <!--3 springboot插件-->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+    <!--
+    <repositories>元素是Maven项目中的一个部分，用于定义项目依赖项的仓库位置。
+    在这个元素中，您可以指定一个或多个仓库，Maven将从这些仓库中查找项目所需的依赖项。
+    通常情况下，您会在这里添加需要的外部依赖项的仓库信息，以便Maven能够下载这些依赖项并将其添加到项目构建路径中。
+    -->
+    <repositories>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </repository>
+    </repositories>
+    <!--
+    <pluginRepositories>元素类似于<repositories>元素，但它是用来定义项目构建插件的仓库位置的。
+    在这个元素中，您可以指定一个或多个仓库，Maven将从这些仓库中查找项目构建所需的插件。
+    这对于使用特定插件或使用特定版本的插件非常有用。
+    通常情况下，您会在这里添加项目构建所需的插件的仓库信息，以便Maven能够下载这些插件并在构建过程中使用它们。
+    -->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <!--
+    mvnw和mvnw.cmd：这是Maven包装器(wrapper)脚本。借助这些脚本，即便你的机器上没有安装Maven，也可以构建项目
+    -->
 </project>
-<!-- end::allButSelenium[] -->
+        <!-- end::allButSelenium[] -->
 
+
+        <!--
+        举一个标准的 Maven 插件打包成可供其他项目引用的库的例子：
+        假设你有一个名为 "utils" 的项目，其中包含一些常用的工具类。你想将这些工具类打包成一个 JAR 文件，并将其上传到 Maven 中央仓库，以便其他项目可以通过 Maven 依赖来使用这些工具类。
+        你可以使用 Maven 的 maven-jar-plugin 插件来配置打包过程，并且将 JAR 文件上传到 Maven 中央仓库。配置可能如下所示：
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>com.example.Main</mainClass>  如果有入口点的话
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
+        <distributionManagement>
+            <repository>
+                <id>central</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+            </repository>
+        </distributionManagement>
+        在这个例子中，maven-jar-plugin 插件用于配置 JAR 文件的打包过程，并且将 JAR 文件上传到 Maven 中央仓库。
+        你可以根据实际情况调整配置，确保工具类被正确打包，并且上传到了 Maven 仓库中。
+        其他项目可以通过 Maven 依赖来引用你的工具类：
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>utils</artifactId>
+            <version>1.0.0</version> 或者其他版本号
+        </dependency>
+        -->
 
 
