@@ -9,6 +9,7 @@
   </head>
 
   <body>
+    <!--使用了Thymeleaf的@{}操作符，用来生成一个相对于上下文的路径,在Spring Boot应用中，静态内容要放到根类路径的“/static”目录下-->
     <h1>Design your taco!</h1>
     <img th:src="@{/images/TacoCloud.png}"/>
 

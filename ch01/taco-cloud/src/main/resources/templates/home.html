@@ -7,6 +7,17 @@
   
   <body>
     <h1>Welcome to...</h1>
+    <!--
+    在Spring Boot中，默认情况下，静态资源（如图片、CSS文件、JavaScript文件等）会放置在src/main/resources/static目录下。
+    因此，无论是使用@{/images/TacoCloud.png}还是@{/static/images/TacoCloud.png}都会定位到相同的资源，
+    因为static目录在Spring Boot中是默认的静态资源目录。
+    Thymeleaf会将这些资源路径解析为相对于应用根目录的路径，并且自动将它们映射到静态资源目录中。
+    -->
     <img th:src="@{/images/TacoCloud.png}"/>
+  <!--
+     图片是使用相对于上下文的“/images/TacoCloud.png”路径来引用的。
+     回忆一下我们的项目结构，像图片这样的静态资源位于“/src/main/resources/static”文件夹。
+     这意味着，在项目中Taco Cloud Logo的图片路径必须为“/src/main/resources/static/images/ TacoCloud.png”。
+  -->
   </body>
 </html>
