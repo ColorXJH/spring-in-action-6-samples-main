@@ -10,7 +10,7 @@ import tacos.data.service.OrderAdminService;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-  
+  //单独显式的一个构造器注入不需要@Autowired
   private OrderAdminService adminService;
 
   public AdminController(OrderAdminService adminService) {

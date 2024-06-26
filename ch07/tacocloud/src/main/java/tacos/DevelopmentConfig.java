@@ -1,22 +1,27 @@
 package tacos;
 
-import java.util.Arrays;
-
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import tacos.Ingredient.Type;
 import tacos.data.IngredientRepository;
 import tacos.data.TacoRepository;
 import tacos.data.UserRepository;
 
+import java.util.Arrays;
+
 @Profile("!prod")
 @Configuration
 public class DevelopmentConfig {
 
+  public ApplicationRunner test(){
+      return args -> {
+        System.out.println("test_data_start");
+      };
+  }
   @Bean
   public CommandLineRunner dataLoader(
       IngredientRepository repo,

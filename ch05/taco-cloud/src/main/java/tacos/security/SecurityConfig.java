@@ -1,16 +1,11 @@
 package tacos.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.web
-                        .configuration.WebSecurityConfigurerAdapter;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.config.annotation
-             .authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web
-             .builders.HttpSecurity;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,13 +20,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
       .authorizeRequests()
+        //前面优先级高，后面优先级低，调换matcher顺序会导致所有的都无需角色权限
         .antMatchers("/design", "/orders").access("hasRole('USER')")
         .antMatchers("/", "/**").access("permitAll")
-
+      //处理表单的post请求的login登录动作
       .and()
         .formLogin()
           .loginPage("/login")
-
+      //在Spring Security 中，当用户登录失败时，默认行为是将用户重定向到登录页面并附带一个 error 参数。
+      //这是由 Spring Security 自动处理的，不需要显式地在配置中指定。
       .and()
         .logout()
           .logoutSuccessUrl("/")

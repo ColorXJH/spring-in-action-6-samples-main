@@ -1,28 +1,19 @@
 package tacos.web;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
-
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.*;
 import tacos.Ingredient;
 import tacos.Ingredient.Type;
 import tacos.Taco;
 import tacos.TacoOrder;
 
 import javax.validation.Valid;
-
-import org.springframework.validation.Errors;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -92,7 +83,7 @@ public class DesignTacoController {
             Model model,
             @Valid Taco taco, Errors errors,
             @ModelAttribute TacoOrder tacoOrder) {
-
+            //tacoOrder这个对象是我们借助带有@ModelAttribute的order方法放到模型中去的
         if (errors.hasErrors()) {
             return "design";
         }
