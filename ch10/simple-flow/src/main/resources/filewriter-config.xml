@@ -10,19 +10,20 @@
     http://www.springframework.org/schema/integration/file
     http://www.springframework.org/schema/integration/file/spring-integration-file.xsd">
 
-    <int:channel id="textInChannel" />             <!--1-->
+    <int:channel id="textInChannel" />             <!--声明textInChannel，也是网关的请求通道-->
 
     <int:transformer id="upperCase"
         input-channel="textInChannel"
         output-channel="fileWriterChannel"
-        expression="payload.toUpperCase()" />      <!--2-->
+        expression="payload.toUpperCase()" />      <!--消息转换器：转换文本为大写-->
 
-    <int:channel id="fileWriterChannel" />         <!--3-->
+    <int:channel id="fileWriterChannel" />         <!--声明fileWriterChannel-->
 
+    <!--出站适配器：从fileWriterChannel接收消息，将消息载荷写入文件目录/tmp/sia6/files，文件名称为：file_name-->
     <int-file:outbound-channel-adapter id="writer"
         channel="fileWriterChannel"
-        directory="/tmp/sia6/files"
+        directory="F:\temp\sia\file"
         mode="APPEND"
-        append-new-line="true" />                  <!--4-->
+        append-new-line="true" />                  <!--将文本写入文件-->
 
 </beans>

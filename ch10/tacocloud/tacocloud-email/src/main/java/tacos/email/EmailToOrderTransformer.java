@@ -1,20 +1,19 @@
 package tacos.email;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import org.apache.commons.text.similarity.LevenshteinDistance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.integration.mail.transformer
-                                            .AbstractMailMessageTransformer;
-import org.springframework.integration.support
-                                            .AbstractIntegrationMessageBuilder;
+import org.springframework.integration.mail.transformer.AbstractMailMessageTransformer;
+import org.springframework.integration.support.AbstractIntegrationMessageBuilder;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.stereotype.Component;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Handles email content as taco orders where...</p>
@@ -72,6 +71,8 @@ public class EmailToOrderTransformer
 
   private EmailOrder parseEmailToOrder(String email, String content) {
     EmailOrder order = new EmailOrder(email);
+    //匹配回车\r  同时匹配换行符号\n ?表示可选的，总体意思：匹配一个换行符，如果存在的话前面可能还会有一个回车符
+    //在处理不同的操作系统文本文件时很有用 windows为\r\n  linux为\n
     String[] lines = content.split("\\r?\\n");
     for (String line : lines) {
       if (line.trim().length() > 0 && line.contains(":")) {

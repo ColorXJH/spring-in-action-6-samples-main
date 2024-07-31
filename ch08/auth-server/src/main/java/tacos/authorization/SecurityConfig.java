@@ -36,6 +36,8 @@ public class SecurityConfig {
 		// 并在需要时注入到其他依赖中，例如在Spring Security配置中使用。
 	}
 
+
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 	  return new BCryptPasswordEncoder();

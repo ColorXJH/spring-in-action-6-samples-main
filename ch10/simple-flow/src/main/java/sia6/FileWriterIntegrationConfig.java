@@ -1,6 +1,5 @@
 package sia6;
 
-import java.io.File;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
@@ -15,6 +14,8 @@ import org.springframework.integration.file.dsl.Files;
 import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.integration.transformer.GenericTransformer;
 
+import java.io.File;
+
 @Configuration
 public class FileWriterIntegrationConfig {
 
@@ -25,7 +26,8 @@ public class FileWriterIntegrationConfig {
 
   @Profile("javaconfig")
   @Bean
-  @Transformer(inputChannel="textInChannel",                  <!--1-->
+  //声明转换器
+  @Transformer(inputChannel="textInChannel",
                outputChannel="fileWriterChannel")
   public GenericTransformer<String, String> upperCaseTransformer() {
     return text -> text.toUpperCase();
@@ -33,10 +35,11 @@ public class FileWriterIntegrationConfig {
 
   @Profile("javaconfig")
   @Bean
-  @ServiceActivator(inputChannel="fileWriterChannel")
-  public FileWritingMessageHandler fileWriter() {             <!--2-->
+  @ServiceActivator(inputChannel="fileWriterChannel")//服务激活器
+  //声明文件写入消息处理器
+  public FileWritingMessageHandler fileWriter() {
     FileWritingMessageHandler handler =
-        new FileWritingMessageHandler(new File("/tmp/sia6/files"));
+        new FileWritingMessageHandler(new File("F:\\temp\\sia6\\file"));
     handler.setExpectReply(false);
     handler.setFileExistsMode(FileExistsMode.APPEND);
     handler.setAppendNewLine(true);
@@ -50,13 +53,13 @@ public class FileWriterIntegrationConfig {
   @Bean
   public IntegrationFlow fileWriterFlow() {
     return IntegrationFlows
-        .from(MessageChannels.direct("textInChannel"))         // <1>
-        .<String, String>transform(t -> t.toUpperCase())       // <2>
-        .handle(Files                                          // <3>
-            .outboundAdapter(new File("/tmp/sia6/files"))
+        .from(MessageChannels.direct("textInChannel"))         // 从textInChannel通道接收消息
+        .<String, String>transform(t -> t.toUpperCase())       // 进入转换器，将载荷转换成大写形式
+        .handle(Files                                          // 交由出站通道适配器处理
+            .outboundAdapter(new File("F:\\temp\\sia6\\file6"))
             .fileExistsMode(FileExistsMode.APPEND)
             .appendNewLine(true))
-        .get();
+        .get();//调用get()返回IntegrationFlow
   }
 
   /*
@@ -73,5 +76,17 @@ public class FileWriterIntegrationConfig {
         .get();
   }
    */
+  /*@Bean
+  @Transformer(inputChannel = "numberChannel",outputChannel = "romanChannel")
+  public GenericTransformer<Integer,String>romanNumTransformer(){
+    return RomanNumbers::toRoman
+  }*/
 
+  /*@Bean
+  @ServiceActivator(inputChannel = "demo1",outputChannel = "demo2")
+  public GenericHandler<Object>orderHandler(Object repo){
+    return (object,handler)->{
+      return repo.equals(object);
+    };
+  }*/
 }

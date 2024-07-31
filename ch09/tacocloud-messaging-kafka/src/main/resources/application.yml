@@ -11,5 +11,5 @@ spring:
       default-topic: tacocloud.orders.topic
 # end::kafkaDefaultTopic[]
     producer:
-      keySerializer: org.springframework.kafka.support.serializer.JsonSerializer
-      valueSerializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

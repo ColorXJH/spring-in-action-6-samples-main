@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -42,10 +43,15 @@ public class AuthorizationServerConfig {
         .build();
   }
 
+
   // @formatter:off
   @Bean
   public RegisteredClientRepository registeredClientRepository(
           PasswordEncoder passwordEncoder) {
+    ClientSettings settings = ClientSettings.builder()
+            .requireAuthorizationConsent(true)
+            .build();
+
     RegisteredClient registeredClient =
             //随机的唯一标识符
       RegisteredClient.withId(UUID.randomUUID().toString())
@@ -71,15 +77,18 @@ public class AuthorizationServerConfig {
               //客户端设置
         .clientSettings(
                 //要求在授予所有请求的scope之前得到用户的明确许可
-            clientSettings -> clientSettings.requireUserConsent(true))
+            //clientSettings -> clientSettings.requireUserConsent(true)
+                settings
+                )
         .build();
     return new InMemoryRegisteredClientRepository(registeredClient);
   }
   // @formatter:on
 
+
   @Bean
   public ProviderSettings providerSettings() {
-    return new ProviderSettings().issuer("http://authserver:9000");
+    return ProviderSettings.builder().issuer("http://127.0.0.1:9009").build();
   }
   //因为我们的授权服务器将会生成JWT令牌，令牌需要包含一个使用JWK（json web key）作为密钥所创建的签名
   //因此我们需要一些bean来生成JWK
@@ -90,7 +99,8 @@ public class AuthorizationServerConfig {
     JWKSet jwkSet = new JWKSet(rsaKey);
     return (jwkSelector, securityContext) -> jwkSelector.select(jwkSet);
   }
-
+  //JWKSource创建了2048位的RSA密钥对，将其用于对令牌的签名，令牌会使用私钥签名，
+  //资源服务器会通过从授权服务器获取到的公钥验证请求中收到的令牌是否有效
   private static RSAKey generateRsa() throws NoSuchAlgorithmException {
     KeyPair keyPair = generateRsaKey();
     RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();

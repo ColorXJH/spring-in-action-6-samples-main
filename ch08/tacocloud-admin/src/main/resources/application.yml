@@ -20,6 +20,7 @@ spring:
 # tag::provider_config[]
         provider:
           tacocloud:
-            issuer-uri: http://authserver:9000
+            #issuer-uri: http://authserver:9009   #本机的host文件中映射 127.0.0.1 authserver
+            issuer-uri: http://127.0.0.1:9009
 # end::provider_config[]
 
