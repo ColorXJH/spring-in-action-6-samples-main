@@ -2,6 +2,7 @@ package tacos.messaging;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.Session;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
@@ -21,6 +22,9 @@ public class JmsOrderMessagingService implements OrderMessagingService {
 
   @Override
   public void sendOrder(TacoOrder order) {
+    /*jms.send((Session session)->{
+        return session.createMessage();
+    });*/
     jms.convertAndSend("tacocloud.order.queue", order,
         this::addOrderSource);
   }
