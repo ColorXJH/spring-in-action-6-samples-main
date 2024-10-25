@@ -86,7 +86,9 @@ info:
 ---
 spring:
   profiles: prod
-
+  #docker pull mysql
+  #docker run --name mysql -e MYSQL_ROOT_PASSWORD=2012WananXJH -e MYSQL_DATABASE=tacocloud -e MYSQL_USER=tacouser -e MYSQL_PASSWORD=tacopassword  -p 3307:3306 -d mysql
+  #为什么用本机的3307端口，因为本地3306端口被占用了（本机mysql）
   datasource:
     url: jdbc:mysql://localhost/tacocloud
     username: tacouser
