@@ -8,5 +8,5 @@ import tacos.Ingredient;
 @CrossOrigin(origins="http://localhost:8080")
 public interface IngredientRepository 
          extends ReactiveCrudRepository<Ingredient, String> {
-
+    //docker run -p 27017:27017 --name mongodb -d mongo
 }

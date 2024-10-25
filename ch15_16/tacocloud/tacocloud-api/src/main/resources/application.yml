@@ -4,6 +4,7 @@ spring:
   jms:
     template:
       default-destination: tacocloud.order.queue
+  #docker run -d --name artemis-broker -p 61616:61616 -p 8161:8161 -e ARTEMIS_USERNAME=tacoweb -e ARTEMIS_PASSWORD=letm31n apache/activemq-artemis:latest
   artemis:
     host: localhost
     port: 61616
@@ -23,6 +24,9 @@ spring:
     producer:
       key-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer    
+
+
+
 ---
 # None of these properties will actually work as configured for this profile.
 # But it is left here as an example of configuring for a production profile

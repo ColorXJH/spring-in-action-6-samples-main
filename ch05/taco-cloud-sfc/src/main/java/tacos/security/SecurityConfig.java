@@ -1,21 +1,13 @@
 package tacos.security;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
 import tacos.User;
 import tacos.data.UserRepository;
 
@@ -49,8 +41,11 @@ public class SecurityConfig {
       .and()
         .formLogin()
           .loginPage("/login")
-          
-      .and()
+            .loginProcessingUrl("/authenticate")//上方的路径就是security默认的post提交表单处理请求地址(无需我们书写自动处理)，这里是我们自定义的处理登录认证的路径
+            .usernameParameter("user")
+            .passwordParameter("pwd")
+            .defaultSuccessUrl("/design",true)//登录成功后跳转的路径
+            .and()
         .logout()
           .logoutSuccessUrl("/")
           

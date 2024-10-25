@@ -12,7 +12,6 @@ public class SimpleFlowApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SimpleFlowApplication.class, args);
 	}
-	
 	@Bean
 	public CommandLineRunner writeData(FileWriterGateway gateway, Environment env) {
 	  return args -> {

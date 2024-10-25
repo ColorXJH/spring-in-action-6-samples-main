@@ -10,6 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/").setViewName("home");
+    //省略的视图名称由请求url路径作为视图名称：login.html
     registry.addViewController("/login");
   }
 

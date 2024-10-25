@@ -1,6 +1,6 @@
 #tag::portNineThousand[]
 server:
-  port: 9000
+  port: 9009
 #end::portNineThousand[]
 
 management:

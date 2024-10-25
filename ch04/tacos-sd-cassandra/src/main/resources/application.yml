@@ -2,5 +2,8 @@ spring:
   data:
     cassandra:
       keyspace-name: taco_cloud
-      schema-action: recreate
+      schema-action: CREATE_IF_NOT_EXISTS
       local-datacenter: datacenter1
+      contact-points: 127.0.0.1
+      port: 9042
+

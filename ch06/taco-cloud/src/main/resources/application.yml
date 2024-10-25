@@ -15,6 +15,7 @@ taco:
   discount:
     codes:
       abcdef: 10
+      address: 20
 
 
 ---

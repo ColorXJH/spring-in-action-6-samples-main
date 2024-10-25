@@ -1,3 +1,9 @@
+
+#使用jms发送消息的前提是假设你使用了AMQP,你也可以选择使用其他的比如kafka mq，这里我们使用Spring for Apache ActiveMQ Artemis
+#我们可以使用docker搭建一个代理环境
+  #docker pull apache/activemq-artemis
+  #docker run -d --name=artemis -e ARTEMIS_USERNAME=artemis -e ARTEMIS_PASSWORD=artemis -p 61616:61616 -p 8161:8161 apache/activemq-artemis
+  #地洞docker之后登录http://localhost:8161/console/auth/login  访问后台页面 默认用户名密码：artemis/artemis
 # The values given here are actually the default values. But they are explicitly
 # set here as an example of setting the Artemis properties.
 spring:
@@ -7,11 +13,11 @@ spring:
   artemis:
     host: localhost
     port: 61616
-    user: tacoweb
-    password: letm31n
+    user: artemis
+    password: artemis
     embedded:
       enabled: false
-    
+    #broker-url: tcp://localhost:61616
 ---
 # None of these properties will actually work as configured for this profile.
 # But it is left here as an example of configuring for a production profile

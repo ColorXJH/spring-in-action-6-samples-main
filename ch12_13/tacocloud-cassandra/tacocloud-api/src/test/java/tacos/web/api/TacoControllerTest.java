@@ -1,23 +1,22 @@
 package tacos.web.api;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tacos.Ingredient.Type;
 import tacos.IngredientUDT;
 import tacos.Taco;
 import tacos.data.TacoRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 public class TacoControllerTest {
 
@@ -45,7 +44,7 @@ public class TacoControllerTest {
       .exchange()
       .expectStatus().isOk()
       .expectBody()
-        .jsonPath("$").isArray()
+        .jsonPath("$").isArray()//"$"表示 JSON 文档的根对象或根数组
         .jsonPath("$").isNotEmpty()
         .jsonPath("$[0].id").isEqualTo(tacos[0].getId().toString())
         .jsonPath("$[0].name").isEqualTo("Taco 1")
