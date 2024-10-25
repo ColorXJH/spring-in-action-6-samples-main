@@ -11,7 +11,7 @@ public class RabbitOrderMessagingService
        implements OrderMessagingService {
 
   private RabbitTemplate rabbit;
-
+  //docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
   @Autowired
   public RabbitOrderMessagingService(RabbitTemplate rabbit) {
     this.rabbit = rabbit;

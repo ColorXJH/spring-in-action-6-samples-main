@@ -1,12 +1,11 @@
 package reactorfun;
 
-import java.time.Duration;
-
 import org.junit.jupiter.api.Test;
-
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 import reactor.util.function.Tuple2;
+
+import java.time.Duration;
 
 public class FluxMergingTests {
 
@@ -24,7 +23,9 @@ public class FluxMergingTests {
         .delayElements(Duration.ofMillis(500));
 
     Flux<String> mergedFlux = characterFlux.mergeWith(foodFlux);
-
+    mergedFlux.subscribe(s->{
+      System.out.println("新的流："+s);
+    });
     StepVerifier.create(mergedFlux)
         .expectNext("Garfield")
         .expectNext("Lasagna")

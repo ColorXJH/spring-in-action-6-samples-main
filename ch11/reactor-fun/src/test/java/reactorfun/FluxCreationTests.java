@@ -1,14 +1,13 @@
 package reactorfun;
 
+import org.junit.jupiter.api.Test;
+import reactor.core.publisher.Flux;
+import reactor.test.StepVerifier;
+
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
-
-import org.junit.jupiter.api.Test;
-
-import reactor.core.publisher.Flux;
-import reactor.test.StepVerifier;
 
 public class FluxCreationTests {
 
@@ -104,6 +103,25 @@ public class FluxCreationTests {
         .expectNext(4)
         .expectNext(5)
         .verifyComplete();
+  }
+  @Test
+  public void simpleTest() throws InterruptedException {
+    //Flux<String> fruitFlux=Flux.just("apple","banana","orange","strawberry");
+    //Flux<Integer>fruitFlux=Flux.just(1,2,3,4,5,6);
+    Flux<Long> fruitFlux=Flux.interval(Duration.ofSeconds(1))
+            .take(50);
+    fruitFlux.subscribe(f->{
+      System.out.println("here's some fruits:"+f);
+    });
+    /*StepVerifier.create(fruitFlux).expectNext("apple")
+            .expectNext("banana")
+            .expectNext("orange")
+            .expectNext("strawberry")
+            .verifyComplete();*/
+
+    // 让主线程等待足够的时间以输出所有数据
+    Thread.sleep(51000);  // 51 秒，因为50个数据 + 1秒的余量
+
   }
   
 }

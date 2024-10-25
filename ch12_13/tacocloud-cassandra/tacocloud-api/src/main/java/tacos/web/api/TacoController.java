@@ -1,24 +1,16 @@
 package tacos.web.api;
 
-import java.util.UUID;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import tacos.Taco;
 import tacos.data.TacoRepository;
 
+import java.util.UUID;
+
 @RestController
-@RequestMapping(path = "/api/tacos", produces = "application/json")
+ @RequestMapping(path = "/api/tacos", produces = "application/json")
 @CrossOrigin(origins="http://localhost:8080")
 public class TacoController {
   private TacoRepository tacoRepo;
@@ -43,4 +35,6 @@ public class TacoController {
     return tacoRepo.findById(id);
   }
 
+
+  class UnknownIngredientException extends Exception{}
 }
